@@ -1,0 +1,51 @@
+li
+    width: 100%
+    height: 60px
+    font-size: 30px
+    font-weight: 300
+    color: #808080
+    padding: 15px
+    display: flex
+    justify-content: flex-start
+    align-items: center
+    border-bottom: 1px solid rgb(211,211,211)
+    input
+        width: 0
+        height: 0
+        opacity: 0
+        position: absolute
+        z-index: -1
+    .grey
+        color: rgb(211,211,211)
+        text-decoration: line-through
+    label
+        padding-left: 10px
+        .custom
+            position: relative
+            display: inline-block
+            width: 20px
+            height: 20px
+            background: #ffffff
+            border: 2px solid #7e9bbd
+            border-radius: 50%
+            margin-right: 25px
+        .custom::before
+            content: ''
+            display: inline-block
+            height: 13px
+            width: 13px
+            background-image: url('../../assets/check.svg')
+            background-size: contain
+            background-repeat: no-repeat
+            position: absolute
+            left: 50%
+            bottom: 40%
+            transform: translate(-50%, 50%) scale(0)
+            transition: .2s ease-in
+        input:checked
+            +
+                .custom::before
+                    transform: translate(-50%, 50%) scale(1)
+            
+
+        
