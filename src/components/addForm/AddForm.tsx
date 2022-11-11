@@ -1,6 +1,8 @@
 import { useState } from "react";
 import "./addForm.sass";
 import { Task } from "../../task";
+import { useContext } from "react";
+import { ThemeContext } from "../../context/ThemeContext";
 
 interface Props {
     addItem: (name: string) => void;
@@ -9,6 +11,15 @@ interface Props {
 
 const AddForm = ({ addItem, items }: Props) => {
     const [text, setText] = useState("");
+
+    const theme = useContext(ThemeContext);
+
+    let classNames = {};
+    if (theme.dark) {
+        classNames = {
+            "background-color": "black",
+        };
+    }
 
     const onSubmit = (e: React.FormEvent) => {
         e.preventDefault();
@@ -25,10 +36,16 @@ const AddForm = ({ addItem, items }: Props) => {
 
     return (
         <form onSubmit={onSubmit}>
-            <button>
+            <button style={classNames}>
                 <div className={clazz}></div>
             </button>
-            <input type="text" placeholder="What needs to be done?" value={text} onChange={(e) => setText(e.target.value)} />
+            <input
+                type="text"
+                style={classNames}
+                placeholder="What needs to be done?"
+                value={text}
+                onChange={(e) => setText(e.target.value)}
+            />
         </form>
     );
 };

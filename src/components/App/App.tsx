@@ -1,14 +1,27 @@
 import "./App.sass";
-import AddForm from "../components/addForm/AddForm";
+import AddForm from "../addForm/AddForm";
 import { useState } from "react";
-import TodoList from "../components/todo-list/TodoList";
-import TodoFilter from "../components/todoFilter/TodoFilter";
+import TodoList from "../todo-list/TodoList";
+import TodoFilter from "../todoFilter/TodoFilter";
 import { nanoid } from "nanoid";
-import { Task } from "../task";
+import { Task } from "../../task";
+import ToggleTheme from "../ToggleTheme/ToggleTheme";
+import { useContext } from "react";
+import { ThemeContext } from "../../context/ThemeContext";
 
 function App() {
     const [items, setItems] = useState<Task[]>([]);
     const [filter, setFilter] = useState<string>("All");
+
+    const { dark } = useContext(ThemeContext);
+
+    let classNames = {};
+    if (dark) {
+        classNames = {
+            background: "#1b1b1b",
+            boxShadow: "none",
+        };
+    }
 
     const addItem = (name: string) => {
         const newItem = {
@@ -54,19 +67,22 @@ function App() {
     const activeTasksNum = filterItems(items, "Active").length;
 
     return (
-        <div className="App">
-            <h1>todos</h1>
-            <div>
-                <AddForm addItem={addItem} items={items} />
-                <TodoList items={visibleData} onToggleDone={onToggleDone} />
-                <TodoFilter
-                    filter={filter}
-                    onFilterSelect={onFilterSelect}
-                    activeTasksNum={activeTasksNum}
-                    deleteCompleted={deleteCompleted}
-                    items={items}
-                />
+        <div className="wrapper" style={classNames}>
+            <div className="App">
+                <h1>todos</h1>
+                <div style={classNames}>
+                    <AddForm addItem={addItem} items={items} />
+                    <TodoList items={visibleData} onToggleDone={onToggleDone} />
+                    <TodoFilter
+                        filter={filter}
+                        onFilterSelect={onFilterSelect}
+                        activeTasksNum={activeTasksNum}
+                        deleteCompleted={deleteCompleted}
+                        items={items}
+                    />
+                </div>
             </div>
+            <ToggleTheme />
         </div>
     );
 }

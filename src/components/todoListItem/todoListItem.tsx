@@ -1,5 +1,8 @@
 import "./todoListItem.sass";
 import { Task } from "../../task";
+import { useContext } from "react";
+import { ThemeContext } from "../../context/ThemeContext";
+
 interface TodoListItemProps {
     item: Task;
     onToggleDone: (name: string | number) => void;
@@ -8,6 +11,11 @@ interface TodoListItemProps {
 const TodoListItem = ({ item, onToggleDone }: TodoListItemProps) => {
     const { name, done, id } = item;
 
+    const { dark } = useContext(ThemeContext);
+    let classNames = "";
+    if (dark) {
+        classNames += " dark";
+    }
     const changeCheckbox = (name: string) => {
         onToggleDone(name);
     };
@@ -18,7 +26,7 @@ const TodoListItem = ({ item, onToggleDone }: TodoListItemProps) => {
     }
     console.log(id, name);
     return (
-        <li>
+        <li className={classNames}>
             <label className={clazz}>
                 <input type="checkbox" checked={done} onChange={() => changeCheckbox(id)} />
                 <span className="custom"></span>
